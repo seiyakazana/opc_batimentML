@@ -1,6 +1,7 @@
 import requests
 
-URL = "http://35.180.196.56:3000/predict"
+URL = "http://35.181.173.155:3000/predict"
+#URL = "http://localhost:3000/predict"
 
 payload = {
     "rows": [
@@ -12,7 +13,6 @@ payload = {
             "Neighborhood_EAST": 1,
             "source_of_energy": 3,
             "Building_Age": 100,
-            "Building_Age_Category": "80+",
             "ComplianceStatus": "Non-Compliant",
             "Outlier": "Low outlier",
 

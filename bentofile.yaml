@@ -1,10 +1,10 @@
-service: "service:EnergyRegressorService"
+service: "app.service:EnergyRegressorService"
 
 models:
-  - "energy_regressor:nqgxpyhevkwdvjhq"
+  - "energy_regressor:ado2lcpkbo6brjhq"
 
 include:
-  - "service.py"
+  - "app/service.py"
 
 python:
   packages:

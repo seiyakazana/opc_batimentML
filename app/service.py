@@ -44,8 +44,13 @@ class InputRow(BaseModel):
 
     PropertyUseDetails: Dict[UseName, confloat(ge=0)] = Field(
         default_factory=dict,
-        description="Surfaces (m²) par usage. Ex: {'Office': 70000, 'Parking': 18434}",
-    )
+        description=(
+            "Surfaces (m²) par usage. "
+            "Usages autorisés: Lodging, Recreation, Other, Education, Retail, "
+            "Office, Warehouse, Parking, Restaurant, Laboratory, Grocery."
+        ),
+        json_schema_extra={"example": {"Office": 70000, "Parking": 18434}},
+    )    
 
     source_of_energy: conint(ge=0, le=3) = Field(
         ...,
@@ -53,7 +58,6 @@ class InputRow(BaseModel):
     )
 
     Building_Age: conint(ge=0, le=300)
-    Building_Age_Category: AGE_CAT
 
     BuildingType: BUILDING_TYPE
     Neighborhood_EAST: conint(ge=0, le=1)
@@ -81,17 +85,6 @@ class InputRow(BaseModel):
                 f"PropertyGFATotal ({gfa}) (tolérance 1%)."
             )
 
-        age = int(self.Building_Age)
-        cat = self.Building_Age_Category
-        if cat == "0-20" and not (0 <= age < 20):
-            raise ValueError("Building_Age incohérent avec Building_Age_Category='0-20'.")
-        if cat == "20-50" and not (20 <= age < 50):
-            raise ValueError("Building_Age incohérent avec Building_Age_Category='20-50'.")
-        if cat == "50-80" and not (50 <= age < 80):
-            raise ValueError("Building_Age incohérent avec Building_Age_Category='50-80'.")
-        if cat == "80+" and not (age >= 80):
-            raise ValueError("Building_Age incohérent avec Building_Age_Category='80+'.")
-
         return self
 
 
@@ -100,6 +93,16 @@ class PredictRequest(BaseModel):
 
 
 # Feature engineering 
+def compute_building_age_category(age: int) -> AGE_CAT:
+    if age < 20:
+        return "0-20"
+    elif age < 50:
+        return "20-50"
+    elif age < 80:
+        return "50-80"
+    else:
+        return "80+"
+
 def areas_to_ratios(
     areas: Dict[str, float],
     gfa: float,
@@ -134,7 +137,7 @@ def build_feature_row(inp: InputRow, ratio_cols: List[str]) -> Dict[str, object]
 
     # categorical
     row["BuildingType"] = inp.BuildingType
-    row["Building_Age_Category"] = inp.Building_Age_Category
+    row["Building_Age_Category"] = compute_building_age_category(inp.Building_Age)
     row["ComplianceStatus"] = inp.ComplianceStatus
     row["Outlier"] = inp.Outlier
 
