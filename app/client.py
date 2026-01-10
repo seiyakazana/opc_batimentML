@@ -1,7 +1,7 @@
 import requests
 
-URL = "http://35.181.173.155:3000/predict"
-#URL = "http://localhost:3000/predict"
+URL = "http://15.237.183.95:3000/predict"
+# URL = "http://localhost:3000/predict"
 
 payload = {
     "rows": [
@@ -9,17 +9,15 @@ payload = {
             "BuildingType": "NonResidential",
             "NumberofBuildings": 1,
             "NumberofFloors": 12,
-            "PropertyGFATotal": 884340,
-            "Neighborhood_EAST": 1,
+            "PropertyGFATotal": 88434,
+            "Neighborhood_EAST": 0,
             "source_of_energy": 3,
             "Building_Age": 100,
-            "ComplianceStatus": "Non-Compliant",
-            "Outlier": "Low outlier",
 
             "PropertyUseDetails": {
-                "Lodging": 440000,
-                "Retail": 220000,
-                "Office": 88000,
+                "Lodging": 88434,
+                "Retail": 0,
+                "Office": 0,
             },
         }
     ]

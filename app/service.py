@@ -32,7 +32,6 @@ BUILDING_TYPE = Literal[
     "SPS-District K-12",
 ]
 
-OUTLIER = Literal["", "High outlier", "Low outlier"]
 AGE_CAT = Literal["0-20", "20-50", "50-80", "80+"]
 
 
@@ -62,12 +61,6 @@ class InputRow(BaseModel):
     BuildingType: BUILDING_TYPE
     Neighborhood_EAST: conint(ge=0, le=1)
 
-    ComplianceStatus: str = Field(
-        ...,
-        description="Valeur brute de ComplianceStatus (le pipeline gère le one-hot, unknown ignoré).",
-    )
-
-    Outlier: OUTLIER = ""
 
     #Pydantic validator
     @model_validator(mode="after")
@@ -138,8 +131,6 @@ def build_feature_row(inp: InputRow, ratio_cols: List[str]) -> Dict[str, object]
     # categorical
     row["BuildingType"] = inp.BuildingType
     row["Building_Age_Category"] = compute_building_age_category(inp.Building_Age)
-    row["ComplianceStatus"] = inp.ComplianceStatus
-    row["Outlier"] = inp.Outlier
 
     return row
 

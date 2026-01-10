@@ -20,8 +20,6 @@ def test_valid_row_passes():
         Neighborhood_EAST=0,
         source_of_energy=2,
         Building_Age=15,
-        ComplianceStatus="Compliant",
-        Outlier="",
         PropertyUseDetails={"Office": 200.0},
     )
     assert row.Building_Age == 15
@@ -37,8 +35,6 @@ def test_property_use_details_must_not_be_empty():
             Neighborhood_EAST=0,
             source_of_energy=2,
             Building_Age=15,
-            ComplianceStatus="Compliant",
-            Outlier="",
             PropertyUseDetails={},  # invalid
         )
 
@@ -53,8 +49,6 @@ def test_sum_of_areas_cannot_exceed_gfa_by_more_than_1_percent():
             Neighborhood_EAST=0,
             source_of_energy=2,
             Building_Age=15,
-            ComplianceStatus="Compliant",
-            Outlier="",
             PropertyUseDetails={"Office": 1020.0},  # > 1010
         )
 
@@ -69,8 +63,6 @@ def test_number_of_buildings_must_be_at_least_one():
             Neighborhood_EAST=0,
             source_of_energy=2,
             Building_Age=15,
-            ComplianceStatus="Compliant",
-            Outlier="",
             PropertyUseDetails={"Office": 200.0},
         )
 

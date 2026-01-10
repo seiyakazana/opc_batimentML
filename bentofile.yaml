@@ -1,7 +1,7 @@
 service: "app.service:EnergyRegressorService"
 
 models:
-  - "energy_regressor:ado2lcpkbo6brjhq"
+  - "energy_regressor:tovsu7xobg74uaib"
 
 include:
   - "app/service.py"
